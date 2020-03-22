@@ -18,32 +18,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '11'
-      - name: Test
-        run: ls APSI/
-      - name: Test2
-        run: cd APSI
-      - name: Test3
-        run: pwd
-#       - name: Maven Package
-#         run: mvn -B clean package -DskipTests
-#       - name: Maven Verify
-#         run: mvn -B clean verify
-        
-#     steps:
-#     - uses: actions/checkout@master
+  
+      - name: Build with Maven
+        run: mvn -f ./APSI/ clean install
 
-#     - name: Set up Java version
-#       uses: actions/setup-java@v1
-#       with:
-#         java-version: '11'
-
-#     - name: Build with Maven
-#       run: mvn clean install
-
-#     - name: Deploy to Azure Web App
-#       uses: azure/webapps-deploy@v1
-#       with:
-#         app-name: 'apsi-team2'
-#         slot-name: 'production'
-#         publish-profile: ${{ secrets.AzureAppService_PublishProfile_cf4af95a2a084becbb78045eac82a662 }}
-#         package: '${{ github.workspace }}/target/*.jar'
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v1
+        with:
+          app-name: 'apsi-team2'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_cf4af95a2a084becbb78045eac82a662 }}
+          package: '${{ github.workspace }}/target/*.jar'
