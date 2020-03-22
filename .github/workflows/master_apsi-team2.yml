@@ -19,7 +19,9 @@ jobs:
         with:
           java-version: '11'
       - name: Test
-        run: ll
+        run: ls
+      - name: Test2
+        run: pwd
 #       - name: Maven Package
 #         run: mvn -B clean package -DskipTests
 #       - name: Maven Verify
