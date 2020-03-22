@@ -28,4 +28,4 @@ jobs:
           app-name: 'apsi-team2'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_cf4af95a2a084becbb78045eac82a662 }}
-          package: '${{ github.workspace }}/target/*.jar'
+          package: '${{ github.workspace }}/APSI/target/*.jar'
