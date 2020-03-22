@@ -78,8 +78,8 @@
         <version>1.9.0</version>
         <configuration>
           <schemaVersion>V2</schemaVersion>
-          <resourceGroup>bike-rental-1584882245111-rg</resourceGroup>
-          <appName>bike-rental-1584882245111</appName>
+          <resourceGroup>APSI</resourceGroup>
+          <appName>APSI-team2</appName>
           <pricingTier>F1</pricingTier>
           <region>westeurope</region>
           <runtime>
