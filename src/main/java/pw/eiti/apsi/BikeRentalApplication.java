@@ -1,4 +1,4 @@
-package pw.eiti.apsi.bikerental;
+package pw.eiti.apsi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

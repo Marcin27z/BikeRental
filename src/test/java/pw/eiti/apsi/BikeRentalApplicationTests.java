@@ -1,4 +1,4 @@
-package pw.eiti.apsi.bikerental;
+package pw.eiti.apsi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
