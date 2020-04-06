@@ -1,7 +1,5 @@
 package pw.eiti.apsi.config;
 
-import org.springframework.context.annotation.Import;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +10,6 @@ import pw.eiti.apsi.interceptor.RequestInterceptor;
 import pw.eiti.apsi.util.ViewNames;
 
 @Configuration
-@EnableWebMvc
-@Import(SpringSecurityConfig.class)
 public class WebConfig implements WebMvcConfigurer {
 
     // == bean methods ==
