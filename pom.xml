@@ -16,14 +16,22 @@
   <description>Demo project for Spring Boot</description>
 
   <properties> 
-    <java.version>11</java.version>
+    <java.version>8</java.version>
   </properties>  
 
   <dependencies>
     <dependency> 
       <groupId>org.springframework.boot</groupId>  
       <artifactId>spring-boot-starter-jdbc</artifactId> 
-    </dependency>  
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
     <!--		<dependency>-->  
     <!--			<groupId>org.springframework.boot</groupId>-->  
     <!--			<artifactId>spring-boot-starter-security</artifactId>-->  
@@ -94,7 +102,7 @@
           <processTypes>
             <web>java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar</web>
           </processTypes>
-          <jdkVersion>11</jdkVersion>
+          <jdkVersion>8</jdkVersion>
           <mavenProject>3.6.2</mavenProject>
         </configuration>
       </plugin>
