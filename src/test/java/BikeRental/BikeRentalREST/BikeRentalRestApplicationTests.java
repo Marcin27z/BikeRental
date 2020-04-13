@@ -9,5 +9,4 @@ class BikeRentalRestApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

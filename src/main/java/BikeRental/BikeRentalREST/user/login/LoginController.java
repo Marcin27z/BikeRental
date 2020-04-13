@@ -1,4 +1,4 @@
-package BikeRental.BikeRentalREST;
+package BikeRental.BikeRentalREST.user.login;
 
 import org.springframework.web.bind.annotation.*;
 
