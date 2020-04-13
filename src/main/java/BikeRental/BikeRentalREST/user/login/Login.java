@@ -11,14 +11,14 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long loginId;
 
-    private String login;
+    private String username;
     private String password;
 
     private String token;
 
     public Login(Long loginId, String login, String password){
         this.loginId = loginId;
-        this.login = login;
+        this.username = login;
         this.password = password;
     }
 
@@ -27,13 +27,13 @@ public class Login {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Login login1 = (Login) o;
-        return login.equals(login1.login) &&
+        return username.equals(login1.username) &&
                 password.equals(login1.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password);
+        return Objects.hash(username, password);
     }
 
     public Long getLoginId() {
@@ -44,12 +44,12 @@ public class Login {
         this.loginId = loginId;
     }
 
-    public String getLogin(){
-        return this.login;
+    public String getUsername(){
+        return this.username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
