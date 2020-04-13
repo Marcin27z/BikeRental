@@ -1,12 +1,23 @@
 package BikeRental.BikeRentalREST.user.login;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Login")
 public class Login {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long loginId;
+
     private String login;
     private String password;
 
-    public Login(String login, String password){
+    private String token;
+
+    public Login(Long loginId, String login, String password){
+        this.loginId = loginId;
         this.login = login;
         this.password = password;
     }
@@ -25,6 +36,14 @@ public class Login {
         return Objects.hash(login, password);
     }
 
+    public Long getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(Long loginId) {
+        this.loginId = loginId;
+    }
+
     public String getLogin(){
         return this.login;
     }
@@ -39,5 +58,13 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

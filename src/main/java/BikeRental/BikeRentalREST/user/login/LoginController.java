@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
-    private Login testLogin = new Login("ala", "kot");
+    private Login testLogin = new Login(123L, "ala", "kot");
 
     @GetMapping("/login")
     public Login availableLogin(){
