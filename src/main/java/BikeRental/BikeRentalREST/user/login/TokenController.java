@@ -13,7 +13,7 @@ public class TokenController {
 
     @PostMapping("/token")
     public String getToken(@RequestParam("username") final String username, @RequestParam("password") final String password){
-        String token = userService.login(username,password);
+        String token = userService.login(username, password);
         if(StringUtils.isEmpty(token)){
             return "no token found";
         }

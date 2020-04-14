@@ -1,5 +1,7 @@
 package BikeRental.BikeRentalREST.user.login;
 
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,14 +13,14 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long loginId;
 
-    private String username;
+    private String userName;
     private String password;
 
     private String token;
 
     public Login(Long loginId, String login, String password){
         this.loginId = loginId;
-        this.username = login;
+        this.userName = login;
         this.password = password;
     }
 
@@ -27,13 +29,13 @@ public class Login {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Login login1 = (Login) o;
-        return username.equals(login1.username) &&
+        return userName.equals(login1.userName) &&
                 password.equals(login1.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password);
+        return Objects.hash(userName, password);
     }
 
     public Long getLoginId() {
@@ -44,12 +46,12 @@ public class Login {
         this.loginId = loginId;
     }
 
-    public String getUsername(){
-        return this.username;
+    public String getUserName(){
+        return this.userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -66,5 +68,13 @@ public class Login {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
