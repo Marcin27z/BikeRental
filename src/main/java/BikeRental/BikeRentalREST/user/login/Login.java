@@ -18,6 +18,13 @@ public class Login {
 
     private String token;
 
+    public Login(){ }
+
+    public Login(String login, String password){
+        this.userName = login;
+        this.password = password;
+    }
+
     public Login(Long loginId, String login, String password){
         this.loginId = loginId;
         this.userName = login;

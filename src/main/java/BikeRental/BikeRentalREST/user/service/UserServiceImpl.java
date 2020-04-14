@@ -19,15 +19,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(String username, String password) {
-        //TODO uncomment after adding database with new data set for login repository
-//        Optional<Login> login = loginRepository.login(username, password);
-//        if(login.isPresent()){
-//            String token = UUID.randomUUID().toString();
-//            Login user = login.get();
-//            user.setToken(token);
-//            loginRepository.save(user);
-//            return token;
-//        }
+        Optional<Login> login = loginRepository.login(username, password);
+        if(login.isPresent()){
+            String token = UUID.randomUUID().toString();
+            Login user = login.get();
+            user.setToken(token);
+            loginRepository.save(user);
+            return token;
+        }
         return StringUtils.EMPTY;
     }
 

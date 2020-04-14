@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public SecurityConfiguration(final AuthenticationProvider authenticationProvider) {
         super();
-        this.provider=authenticationProvider;
+        this.provider = authenticationProvider;
     }
 
     @Override
