@@ -1,11 +1,10 @@
 package BikeRental.BikeRentalREST.user.service;
 
-import BikeRental.BikeRentalREST.user.login.Login;
-import BikeRental.BikeRentalREST.user.login.LoginRepository;
+import BikeRental.BikeRentalREST.user.User;
+import BikeRental.BikeRentalREST.user.UserRepository;
+import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,36 +14,27 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private LoginRepository loginRepository;
+    private UserRepository userRepository;
 
     @Override
     public String login(String username, String password) {
-        Optional<Login> login = loginRepository.login(username, password);
-        if(login.isPresent()){
+        Optional<User> user = userRepository.login(username, password);
+        return user.map(u -> {
             String token = UUID.randomUUID().toString();
-            Login user = login.get();
-            user.setToken(token);
-            loginRepository.save(user);
+            u.setToken(token);
+            userRepository.save(u);
             return token;
-        }
-        return StringUtils.EMPTY;
+        }).orElse(StringUtils.EMPTY);
     }
 
     @Override
-    public Optional<User> findByToken(String token) {
-        Optional<Login> login = loginRepository.findByToken(token);
-        if(login.isPresent()){
-            Login login1 = login.get();
-            User user = new User(login1.getUserName(), login1.getPassword(), true, true, true, true,
-                            AuthorityUtils.createAuthorityList("USER"));
-            return Optional.of(user);
-        }
-        return  Optional.empty();
+    public Optional<MyUserDetails> findByToken(String token) {
+        Optional<User> user = userRepository.findByToken(token);
+        return user.map(MyUserDetails::new);
     }
 
     @Override
-    public Login findById(Long id) {
-        Optional<Login> login = loginRepository.findById(id);
-        return login.orElse(null);
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }
