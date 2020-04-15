@@ -4,6 +4,7 @@ import BikeRental.BikeRentalREST.rental.Rental;
 import BikeRental.BikeRentalREST.user.login.Login;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -13,18 +14,41 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
+  
+    @NotBlank(message = "Login is required")
+    private String login;
 
-    @OneToOne
-    private Login login;
-
+    @NotBlank(message = "Email is required!")
     private String email;
 
+    @NotBlank(message = "Password is required!")
+    private String password;
+
+    @NotBlank(message = "PhoneNumber is required!")
     private String phoneNumber;
 
     private boolean isAdmin;
 
+    public User(){}
+
+    public User(String email, String login, String password, String phoneNumber){
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.isAdmin = false;
+    }
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rental> rentalList;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
     public Long getUserId() {
         return userId;
