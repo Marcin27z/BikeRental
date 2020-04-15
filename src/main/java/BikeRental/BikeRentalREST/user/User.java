@@ -58,14 +58,6 @@ public class User {
         this.userId = userId;
     }
 
-    public Login getLogin() {
-        return login;
-    }
-
-    public void setLogin(Login login) {
-        this.login = login;
-    }
-
     public String getEmail() {
         return email;
     }
