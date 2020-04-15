@@ -1,13 +1,33 @@
 package BikeRental.BikeRentalREST.user.login;
 
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Login")
 public class Login {
-    private String login;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long loginId;
+
+    private String userName;
     private String password;
 
+    private String token;
+
+    public Login(){ }
+
     public Login(String login, String password){
-        this.login = login;
+        this.userName = login;
+        this.password = password;
+    }
+
+    public Login(Long loginId, String login, String password){
+        this.loginId = loginId;
+        this.userName = login;
         this.password = password;
     }
 
@@ -16,21 +36,29 @@ public class Login {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Login login1 = (Login) o;
-        return login.equals(login1.login) &&
+        return userName.equals(login1.userName) &&
                 password.equals(login1.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password);
+        return Objects.hash(userName, password);
     }
 
-    public String getLogin(){
-        return this.login;
+    public Long getLoginId() {
+        return loginId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setLoginId(Long loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -39,5 +67,21 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

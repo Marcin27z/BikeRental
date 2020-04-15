@@ -1,6 +1,7 @@
 package BikeRental.BikeRentalREST.user;
 
 import BikeRental.BikeRentalREST.rental.Rental;
+import BikeRental.BikeRentalREST.user.login.Login;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
-
+  
     @NotBlank(message = "Login is required")
     private String login;
 
@@ -57,20 +58,20 @@ public class User {
         this.userId = userId;
     }
 
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhoneNumber() {
