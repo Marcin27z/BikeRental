@@ -13,12 +13,16 @@ public class RegisterController {
     private UserRepository userRepository;
 
     @PostMapping("/register")
-    public CustomMessage registerUser(@Valid @RequestBody User user){
-        if(userRepository.findByEmailOrLogin(user.getEmail(), user.getLogin()).isEmpty()){
+    public CustomMessage registerUser(@Valid @RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return new CustomMessage(0, "This mail is taken");
+        } else if (userRepository.findByLogin(user.getLogin()).isPresent()) {
+            return new CustomMessage(0, "This login is taken");
+        } else if (userRepository.findByPhoneNumber((user.getPhoneNumber())).isPresent()) {
+            return new CustomMessage(0, "This phone number is taken");
+        } else {
             userRepository.save(user);
             return new CustomMessage(1, "User created!");
         }
-        else
-            return new CustomMessage(0, "User Already Exists!");
     }
 }
