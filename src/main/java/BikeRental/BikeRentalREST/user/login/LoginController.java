@@ -1,31 +1,29 @@
 package BikeRental.BikeRentalREST.user.login;
 
+import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
-    private Login testLogin = new Login(123L, "ala", "kot");
+    private User testUser = new User("ala@example.com", "ala", "ala", "563456345");
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/login-old")
-    public Login availableLogin(){
-        return testLogin;
+    public User availableLogin(){
+        return testUser;
     }
 
     @PostMapping("/login-old")
-    public boolean dologin(@RequestBody Login login){
-        if(login.equals(this.testLogin))
-            return true;
-        else
-            return false;
+    public boolean doLogin(@RequestBody User login){
+        return login.equals(testUser);
     }
 
     @GetMapping(value = "/api/users/user/{id}",produces = "application/json")
-    public Login getUserDetail(@PathVariable Long id){
-        return userService.findById(id);
+    public User getUserDetail(@PathVariable Long id){
+        return userService.findById(id).orElse(null);
     }
 }

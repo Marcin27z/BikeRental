@@ -13,4 +13,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findByLogin(String login);
     Optional<User> findByPhoneNumber(String phoneNumber);
+    @Query(value = "SELECT u FROM User u where u.login = ?1 and u.password = ?2 ")
+    Optional<User> login(String login, String password);
+    Optional<User> findByToken(String token);
 }

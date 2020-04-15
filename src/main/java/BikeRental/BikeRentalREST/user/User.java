@@ -1,7 +1,7 @@
 package BikeRental.BikeRentalREST.user;
 
 import BikeRental.BikeRentalREST.rental.Rental;
-import BikeRental.BikeRentalREST.user.login.Login;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,11 +21,14 @@ public class User {
     @NotBlank(message = "Email is required!")
     private String email;
 
+    @JsonIgnore
     @NotBlank(message = "Password is required!")
     private String password;
 
     @NotBlank(message = "PhoneNumber is required!")
     private String phoneNumber;
+
+    private String token;
 
     private boolean isAdmin;
 
@@ -39,6 +42,7 @@ public class User {
         this.isAdmin = false;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rental> rentalList;
 
@@ -66,6 +70,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -88,5 +100,13 @@ public class User {
 
     public void setRentalList(List<Rental> rentalList) {
         this.rentalList = rentalList;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -1,12 +1,12 @@
 package BikeRental.BikeRentalREST.user.service;
 
-import BikeRental.BikeRentalREST.user.login.Login;
-import org.springframework.security.core.userdetails.User;
+import BikeRental.BikeRentalREST.user.User;
+import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 
 import java.util.Optional;
 
 public interface UserService {
     String login(String username, String password);
-    Optional<User> findByToken(String token);
-    Login findById(Long id);
+    Optional<MyUserDetails> findByToken(String token);
+    Optional<User> findById(Long id);
 }
