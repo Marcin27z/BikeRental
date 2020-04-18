@@ -25,6 +25,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/api/**")
     );
 
+    private static final RequestMatcher PROTECTED_URLS_ADMIN = new OrRequestMatcher(
+            new AntPathRequestMatcher("/admin/**")
+    );
+
     AuthenticationProvider provider;
 
     public SecurityConfiguration(final AuthenticationProvider authenticationProvider) {
@@ -51,8 +55,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authenticationProvider(provider)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
+                .addFilterBefore(adminAuthenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
-                .requestMatchers(PROTECTED_URLS)
+                .requestMatchers(PROTECTED_URLS).hasRole("USER")
+                .requestMatchers(PROTECTED_URLS_ADMIN).hasRole("ADMIN").anyRequest()
                 .authenticated()
                 .and()
                 .csrf().disable()
@@ -66,6 +72,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
         filter.setAuthenticationManager(authenticationManager());
         //filter.setAuthenticationSuccessHandler(successHandler());
+        return filter;
+    }
+
+    @Bean
+    AuthenticationFilter adminAuthenticationFilter() throws Exception {
+        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS_ADMIN);
+        filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
 
