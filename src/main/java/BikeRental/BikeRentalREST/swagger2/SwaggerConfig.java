@@ -93,6 +93,7 @@ public class SwaggerConfig {
                 .securityReferences(
                         Arrays.asList(new SecurityReference("spring_oauth", scopes())))
                 .forPaths(PathSelectors.regex("/api.*"))
+                .forPaths(PathSelectors.regex("/admin.*"))
                 .build();
     }
 }
