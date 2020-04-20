@@ -32,6 +32,8 @@ public class User {
 
     private boolean isAdmin;
 
+    private boolean isActive;
+
     public User(){}
 
     public User(String email, String login, String password, String phoneNumber){
@@ -40,6 +42,7 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.isAdmin = false;
+        this.isActive = true;
     }
 
     @JsonIgnore
@@ -92,6 +95,14 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public List<Rental> getRentalList() {
