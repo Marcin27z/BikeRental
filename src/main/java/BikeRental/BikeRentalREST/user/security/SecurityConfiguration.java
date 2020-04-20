@@ -58,6 +58,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(PROTECTED_URLS)
                 .authenticated()
+                .requestMatchers(PROTECTED_URLS_ADMIN)
+                .hasRole("ADMIN")
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
@@ -67,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
+        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS, PROTECTED_URLS_ADMIN);
         filter.setAuthenticationManager(authenticationManager());
         //filter.setAuthenticationSuccessHandler(successHandler());
         return filter;
