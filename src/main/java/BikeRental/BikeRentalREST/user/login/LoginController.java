@@ -22,7 +22,7 @@ public class LoginController {
         return login.equals(testUser);
     }
 
-    @GetMapping(value = "/admin/users/user/{id}",produces = "application/json")
+    @GetMapping(value = "/api/users/user/{id}",produces = "application/json")
     public User getUserDetail(@PathVariable Long id){
         return userService.findById(id).orElse(null);
     }
