@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authenticationProvider(provider)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
+                .addFilterBefore(adminAuthenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
                 .requestMatchers(PROTECTED_URLS)
                 .authenticated()
@@ -69,7 +70,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS, PROTECTED_URLS_ADMIN);
+        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
+        filter.setAuthenticationManager(authenticationManager());
+        //filter.setAuthenticationSuccessHandler(successHandler());
+        return filter;
+    }
+
+    @Bean
+    AuthenticationFilter adminAuthenticationFilter() throws Exception {
+        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS_ADMIN);
         filter.setAuthenticationManager(authenticationManager());
         //filter.setAuthenticationSuccessHandler(successHandler());
         return filter;

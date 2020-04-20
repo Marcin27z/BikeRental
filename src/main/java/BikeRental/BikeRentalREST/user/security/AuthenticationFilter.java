@@ -19,7 +19,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    AuthenticationFilter(RequestMatcher protectedUrls, final RequestMatcher requiresAuth) {
+    AuthenticationFilter(final RequestMatcher requiresAuth) {
         super(requiresAuth);
     }
 
