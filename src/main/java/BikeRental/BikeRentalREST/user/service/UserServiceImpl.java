@@ -41,16 +41,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public List<User> getUsers(boolean activeUsers) {
         List<User> usersList = userRepository.findAll();
 
-        if (activeUsers) {
-            return usersList.stream()
-                    .filter(User::isActive)
-                    .collect(Collectors.toList());
-        } else {
-            return usersList;
-        }
+        return usersList.stream()
+                .filter(u -> u.isActive() == activeUsers)
+                .collect(Collectors.toList());
     }
 
     @Override

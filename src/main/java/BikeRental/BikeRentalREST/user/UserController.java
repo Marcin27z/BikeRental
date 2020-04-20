@@ -14,8 +14,12 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/admin/users")
-    public List<User> getUsers(@RequestParam(value = "active", defaultValue = "true") final boolean activeUsers){
-        return userService.getUsers(activeUsers);
+    public List<User> getUsers(@RequestParam(value = "active") final Optional<Boolean> activeUsers){
+        if (activeUsers.isPresent()) {
+            return userService.getUsers(activeUsers.get());
+        } else {
+            return userService.getUsers();
+        }
     }
 
     @PostMapping("/admin/users/deactivate/{id}")
