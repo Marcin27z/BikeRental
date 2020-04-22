@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user.login;
 
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ import static com.jayway.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TokenControllerTests {
+    private final static String TOKEN_ENDPOINT = "/token";
+
     private final static String FAKE_USERNAME = "fake";
     private final static String FAKE_PASSWORD = "fake";
 
@@ -30,13 +33,18 @@ class TokenControllerTests {
         String response = given().port(port)
                 .param("username", FAKE_USERNAME)
                 .param("password", FAKE_PASSWORD)
-                .post("/token")
+                .post(TOKEN_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()
                 .asString();
 
         assert (response.equals("no token found"));
+    }
+
+    @AfterEach
+    void removeUsers() {
+        userRepository.deleteAll();
     }
 
     @Test
@@ -47,7 +55,7 @@ class TokenControllerTests {
         String response = given().port(port)
                 .param("username", REAL_USERNAME)
                 .param("password", REAL_PASSWORD)
-                .post("/token")
+                .post(TOKEN_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()

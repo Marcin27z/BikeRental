@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user;
 
 import BikeRental.BikeRentalREST.rental.Rental;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -73,10 +74,12 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
