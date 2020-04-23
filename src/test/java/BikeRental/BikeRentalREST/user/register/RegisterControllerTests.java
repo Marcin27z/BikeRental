@@ -3,7 +3,6 @@ package BikeRental.BikeRentalREST.user.register;
 import BikeRental.BikeRentalREST.CustomMessage;
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserTestBase;
-import com.jayway.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.server.LocalServerPort;

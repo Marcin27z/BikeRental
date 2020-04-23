@@ -1,12 +1,9 @@
 package BikeRental.BikeRentalREST.user.login;
 
 import BikeRental.BikeRentalREST.user.User;
-import BikeRental.BikeRentalREST.user.UserRepository;
 import BikeRental.BikeRentalREST.user.UserTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static com.jayway.restassured.RestAssured.given;
