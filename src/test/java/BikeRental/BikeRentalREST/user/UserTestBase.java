@@ -30,14 +30,8 @@ public class UserTestBase {
         return createUser(email, username, password, phoneNumber, isAdmin, isActive, token);
     }
 
-    private String generateRandomPhoneNumber(){
-        Random generator = new Random();
-
-        return Integer.toString(START_PHONE_NUMBER + generator.nextInt(END_PHONE_NUMBER - START_PHONE_NUMBER));
-    }
-
     protected User createUser(String email, String username, String password, String phoneNumber,
-                    boolean isAdmin, boolean isActive, String token) {
+                              boolean isAdmin, boolean isActive, String token) {
         User user = new User(email, username, password, phoneNumber);
         user.setAdmin(isAdmin);
         user.setActive(isActive);
@@ -53,6 +47,12 @@ public class UserTestBase {
 
     protected void deleteAllUsers() {
         userRepository.deleteAll();
+    }
+
+    private String generateRandomPhoneNumber(){
+        Random generator = new Random();
+
+        return Integer.toString(START_PHONE_NUMBER + generator.nextInt(END_PHONE_NUMBER - START_PHONE_NUMBER));
     }
 
 }

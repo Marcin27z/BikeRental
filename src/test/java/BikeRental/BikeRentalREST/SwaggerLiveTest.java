@@ -13,7 +13,7 @@ class SwaggerLiveTest {
     int port;
 
     @Test
-    void whenVerifySpringFoxIsWorking_thenOK() {
+    void whenVerifySpringFoxIsWorkingThenReturnStatusOK() {
         given().port(port).get("/v2/api-docs")
                 .then().assertThat().statusCode(200);
     }

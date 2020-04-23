@@ -50,14 +50,14 @@ class UserServiceImplTests extends UserTestBase {
     void whenFindByTokenThenGotCorrectUserDetails(){
         Optional<MyUserDetails> user = userService.findByToken(testUser.getToken());
         assertTrue(user.isPresent());
-        assertEquals(testUser.getLogin(),  user.get().getUsername());
+        assertEquals(testUser.getLogin(), user.get().getUsername());
     }
 
     @Test
     void whenFindByIdThenGotCorrectUser(){
         Optional<User> user = userService.findById(testUser.getUserId());
         assertTrue(user.isPresent());
-        assertEquals(testUser.getUserId(),  user.get().getUserId());
+        assertEquals(testUser.getUserId(), user.get().getUserId());
     }
 
     @Test
@@ -65,7 +65,7 @@ class UserServiceImplTests extends UserTestBase {
         createUser(false, false);
         List<User> users = userService.getUsers();
 
-        assertEquals(TWO_ELEMENTS,  users.size());
+        assertEquals(TWO_ELEMENTS, users.size());
     }
 
     @Test
@@ -73,7 +73,7 @@ class UserServiceImplTests extends UserTestBase {
         createUser(false, false);
         List<User> users = userService.getUsers(true);
 
-        assertEquals(ONE_ELEMENT,  users.size());
+        assertEquals(ONE_ELEMENT, users.size());
         assertEquals(testUser.getUserId(), users.get(FIRST_LIST_ELEMENT).getUserId());
     }
 
@@ -82,7 +82,7 @@ class UserServiceImplTests extends UserTestBase {
         User user = createUser(false, false);
         List<User> users = userService.getUsers(false);
 
-        assertEquals(ONE_ELEMENT,  users.size());
+        assertEquals(ONE_ELEMENT, users.size());
         assertEquals(user.getUserId(), users.get(FIRST_LIST_ELEMENT).getUserId());
     }
 
