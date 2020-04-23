@@ -30,15 +30,7 @@ public class UserTestBase {
     private String generateRandomPhoneNumber(){
         Random generator = new Random();
 
-        int num1 = 0;
-        int num2 = 0;
-        int num3 = 0;
-
-        num1 = generator.nextInt(600) + 100;
-        num2 = generator.nextInt(641) + 100;
-        num3 = generator.nextInt(641) + 100;
-
-        return Integer.toString(num1) + Integer.toString(num2) + Integer.toString(num3);
+        return Integer.toString(generator.nextInt(999999999));
     }
 
     protected User createUser(String email, String username, String password, String phoneNumber,
