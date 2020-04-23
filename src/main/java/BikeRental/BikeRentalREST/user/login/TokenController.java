@@ -12,11 +12,7 @@ public class TokenController {
     private UserService userService;
 
     @PostMapping("/token")
-    public String getToken(@RequestParam("username") final String username, @RequestParam("password") final String password){
-        String token = userService.login(username, password);
-        if(StringUtils.isEmpty(token)){
-            return "no token found";
-        }
-        return token;
+    public LoginInfo getToken(@RequestParam("username") final String username, @RequestParam("password") final String password){
+        return userService.login(username, password);
     }
 }
