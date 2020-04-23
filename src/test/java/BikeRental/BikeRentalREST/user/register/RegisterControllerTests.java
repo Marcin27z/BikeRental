@@ -9,9 +9,11 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 class RegisterControllerTests extends UserTestBase {
     private final static String REGISTER_ENDPOINT = "/register";
@@ -46,8 +48,11 @@ class RegisterControllerTests extends UserTestBase {
                 .extract()
                 .body().as(CustomMessage.class);
 
+        Optional<User> user = userRepository.findByLogin(USERNAME);
+
         assertEquals(1, message.getCode());
         assertEquals("User created!", message.getText());
+        assertTrue(user.isPresent());
     }
 
     @Test
