@@ -1,29 +1,14 @@
 package BikeRental.BikeRentalREST.user;
 
-import BikeRental.BikeRentalREST.user.service.UserService;
 import com.jayway.restassured.specification.RequestSpecification;
-import org.junit.Before;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static com.jayway.restassured.RestAssured.given;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoggedUserTestBase {
-    private final static String USERNAME = "user321";
-    private final static String PASSWORD = "password123";
-    private final static String EMAIL = "user@mail.com";
-    private final static String PHONE_NUMBER = "12121212";
+public class LoggedUserTestBase extends UserTestBase {
 
     @LocalServerPort
     int port;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    UserRepository userRepository;
 
     private User loggedUser;
     private String token;
@@ -38,16 +23,7 @@ public class LoggedUserTestBase {
 
     void login(boolean isAdmin){
         loggedUser = createUser(isAdmin, true);
-        token = userService.login(USERNAME, PASSWORD);
-    }
-
-    User createUser(boolean isAdmin, boolean isActive) {
-        User user = new User(EMAIL, USERNAME, PASSWORD, PHONE_NUMBER);
-        user.setAdmin(isAdmin);
-        user.setActive(isActive);
-        userRepository.save(user);
-
-        return user;
+        token = userService.login(loggedUser.getLogin(), loggedUser.getPassword());
     }
 
     void logout() {

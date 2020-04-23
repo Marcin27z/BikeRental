@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user.login;
 
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserRepository;
+import BikeRental.BikeRentalREST.user.UserTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,24 +10,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class TokenControllerTests {
+class TokenControllerTests extends UserTestBase {
     private final static String TOKEN_ENDPOINT = "/token";
 
     private final static String FAKE_USERNAME = "fake";
     private final static String FAKE_PASSWORD = "fake";
 
-    private final static String REAL_USERNAME = "real";
-    private final static String REAL_PASSWORD = "password";
-    private final static String REAL_EMAIL = "mail@mail.com";
-    private final static String REAL_PHONE_NUMBER = "55555555";
-
     @LocalServerPort
     int port;
 
-    @Autowired
-    UserRepository userRepository;
+    @AfterEach
+    void tearDown() {
+        deleteAllUsers();
+    }
 
     @Test
     void whenAskForTokenWithBadCredentialsThenGotErrorMessage() {
@@ -39,29 +38,23 @@ class TokenControllerTests {
                 .extract()
                 .asString();
 
-        assert (response.equals("no token found"));
-    }
-
-    @AfterEach
-    void removeUsers() {
-        userRepository.deleteAll();
+        assertEquals("no token found", response);
     }
 
     @Test
     void whenAskForTokenWithGoodCredentialsThenGotTokenAndNoErrorMessage() {
-        User user = new User(REAL_EMAIL, REAL_USERNAME, REAL_PASSWORD, REAL_PHONE_NUMBER);
-        userRepository.save(user);
+        User user = createUser();
 
         String response = given().port(port)
-                .param("username", REAL_USERNAME)
-                .param("password", REAL_PASSWORD)
+                .param("username", user.getLogin())
+                .param("password", user.getPassword())
                 .post(TOKEN_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()
                 .asString();
 
-        assert (!response.equals("no token found"));
+        assertNotEquals("no token found", response);
     }
 }
 

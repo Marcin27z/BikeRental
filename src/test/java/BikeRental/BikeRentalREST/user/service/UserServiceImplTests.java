@@ -1,11 +1,11 @@
 package BikeRental.BikeRentalREST.user.service;
 
 import BikeRental.BikeRentalREST.user.User;
-import BikeRental.BikeRentalREST.user.UserRepository;
+import BikeRental.BikeRentalREST.user.UserTestBase;
 import BikeRental.BikeRentalREST.user.security.MyUserDetails;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -17,17 +17,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
-class UserServiceImplTests {
-    private final static String USERNAME = "user123";
-    private final static String PASSWORD = "password123";
-    private final static String EMAIL = "mail123@mail.com";
-    private final static String PHONE_NUMBER = "55557777";
-    private final static String TOKEN = "123456789";
-
+class UserServiceImplTests extends UserTestBase {
     private final static String FAKE_USERNAME = "fake";
     private final static String FAKE_PASSWORD = "fake";
-
-    private final static  String EMPTY_TOKEN = "";
 
     private final static int ONE_ELEMENT = 1;
     private final static int TWO_ELEMENTS = 2;
@@ -35,48 +27,28 @@ class UserServiceImplTests {
 
     private static User testUser;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    UserService userService;
-
     @BeforeEach
     void setUp() {
-        deleteUsers();
-        testUser = createTestUser(true, true);
-    }
-
-    User createTestUser(boolean isAdmin, boolean isActive){
-        User testUser = new User(EMAIL, USERNAME, PASSWORD, PHONE_NUMBER);
-        testUser.setToken(TOKEN);
-        testUser.setAdmin(isAdmin);
-        testUser.setActive(isActive);
-        userRepository.save(testUser);
-
-        return testUser;
-    }
-
-    void deleteUsers(){
-        userRepository.deleteAll();
+        deleteAllUsers();
+        testUser = createUser(true, true);
     }
 
     @Test
     void whenLoginToExistingUserThenGotToken(){
-        String token = userService.login(USERNAME, PASSWORD);
-        assertNotEquals(EMPTY_TOKEN, token);
+        String token = userService.login(testUser.getLogin(), testUser.getPassword());
+        assertNotEquals(StringUtils.EMPTY, token);
         assertTrue(token.length() > 0);
     }
 
     @Test
     void whenLoginToNonExistingUserThenGotNoToken(){
         String token = userService.login(FAKE_USERNAME, FAKE_PASSWORD);
-        assertEquals(EMPTY_TOKEN, token);
+        assertEquals(StringUtils.EMPTY, token);
     }
 
     @Test
     void whenFindByTokenThenGotCorrectUserDetails(){
-        Optional<MyUserDetails> user = userService.findByToken(TOKEN);
+        Optional<MyUserDetails> user = userService.findByToken(testUser.getToken());
         assertTrue(user.isPresent());
         assertEquals(testUser.getLogin(),  user.get().getUsername());
     }
@@ -90,7 +62,7 @@ class UserServiceImplTests {
 
     @Test
     void whenGetUsersThenGotAllUsers(){
-        createTestUser(false, false);
+        createUser(false, false);
         List<User> users = userService.getUsers();
 
         assertEquals(TWO_ELEMENTS,  users.size());
@@ -98,7 +70,7 @@ class UserServiceImplTests {
 
     @Test
     void whenGetActiveUsersThenGotOnlyActiveUsers(){
-        createTestUser(false, false);
+        createUser(false, false);
         List<User> users = userService.getUsers(true);
 
         assertEquals(ONE_ELEMENT,  users.size());
@@ -107,7 +79,7 @@ class UserServiceImplTests {
 
     @Test
     void whenGetNoActiveUsersThenGotOnlyNonActiveUsers(){
-        User user = createTestUser(false, false);
+        User user = createUser(false, false);
         List<User> users = userService.getUsers(false);
 
         assertEquals(ONE_ELEMENT,  users.size());
