@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user.service;
 
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserRepository;
+import BikeRental.BikeRentalREST.user.login.LoginInfo;
 import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,15 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public String login(String username, String password) {
+    public LoginInfo login(String username, String password) {
         Optional<User> user = userRepository.login(username, password);
+
         return user.map(u -> {
             String token = UUID.randomUUID().toString();
             u.setToken(token);
             userRepository.save(u);
-            return token;
-        }).orElse(StringUtils.EMPTY);
+            return new LoginInfo(token, u.isAdmin());
+        }).orElse(new LoginInfo(StringUtils.EMPTY, false));
     }
 
     @Override
