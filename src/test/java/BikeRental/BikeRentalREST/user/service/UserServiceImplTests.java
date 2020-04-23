@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user.service;
 
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserTestBase;
+import BikeRental.BikeRentalREST.user.login.LoginInfo;
 import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,14 +36,18 @@ class UserServiceImplTests extends UserTestBase {
 
     @Test
     void whenLoginToExistingUserThenGotToken(){
-        String token = userService.login(testUser.getLogin(), testUser.getPassword());
+        LoginInfo loginInfo = userService.login(testUser.getLogin(), testUser.getPassword());
+        String token = loginInfo.getToken();
+
         assertNotEquals(StringUtils.EMPTY, token);
         assertTrue(token.length() > 0);
     }
 
     @Test
     void whenLoginToNonExistingUserThenGotNoToken(){
-        String token = userService.login(FAKE_USERNAME, FAKE_PASSWORD);
+        LoginInfo loginInfo = userService.login(FAKE_USERNAME, FAKE_PASSWORD);
+        String token = loginInfo.getToken();
+
         assertEquals(StringUtils.EMPTY, token);
     }
 

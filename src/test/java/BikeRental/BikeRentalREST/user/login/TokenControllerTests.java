@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user.login;
 
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserTestBase;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -25,33 +26,34 @@ class TokenControllerTests extends UserTestBase {
     }
 
     @Test
-    void whenAskForTokenWithBadCredentialsThenGotErrorMessage() {
-        String response = given().port(port)
+    void whenAskForTokenWithBadCredentialsThenGotLoginInfoWithBlankToken() {
+        LoginInfo loginInfo = given().port(port)
                 .param("username", FAKE_USERNAME)
                 .param("password", FAKE_PASSWORD)
                 .post(TOKEN_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()
-                .asString();
+                .as(LoginInfo.class);
 
-        assertEquals("no token found", response);
+        assertEquals(StringUtils.EMPTY, loginInfo.getToken());
     }
 
     @Test
-    void whenAskForTokenWithGoodCredentialsThenGotTokenAndNoErrorMessage() {
+    void whenAskForTokenWithGoodCredentialsThenGotLoginInfoWithTokenAndUserPrivileges() {
         User user = createUser();
 
-        String response = given().port(port)
+        LoginInfo loginInfo = given().port(port)
                 .param("username", user.getLogin())
                 .param("password", user.getPassword())
                 .post(TOKEN_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()
-                .asString();
+                .as(LoginInfo.class);
 
-        assertNotEquals("no token found", response);
+        assertNotEquals(StringUtils.EMPTY, loginInfo.getToken());
+        assertEquals(user.isAdmin(), loginInfo.isAdmin());
     }
 }
 

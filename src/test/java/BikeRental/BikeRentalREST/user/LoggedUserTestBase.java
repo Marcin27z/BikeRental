@@ -1,5 +1,6 @@
 package BikeRental.BikeRentalREST.user;
 
+import BikeRental.BikeRentalREST.user.login.LoginInfo;
 import com.jayway.restassured.specification.RequestSpecification;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -22,8 +23,10 @@ public class LoggedUserTestBase extends UserTestBase {
     }
 
     void login(boolean isAdmin){
-        loggedUser = createUser(isAdmin, true);
-        token = userService.login(loggedUser.getLogin(), loggedUser.getPassword());
+        this.loggedUser = createUser(isAdmin, true);
+
+        LoginInfo loginInfo = userService.login(loggedUser.getLogin(), loggedUser.getPassword());
+        token = loginInfo.getToken();
     }
 
     void logout() {
