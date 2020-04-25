@@ -63,6 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .and()
                 .csrf().disable()
+                .cors().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .logout().disable();

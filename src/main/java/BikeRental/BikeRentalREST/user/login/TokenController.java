@@ -11,6 +11,7 @@ public class TokenController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin()
     @PostMapping("/token")
     public LoginInfo getToken(@RequestParam("username") final String username, @RequestParam("password") final String password){
         return userService.login(username, password);
