@@ -14,6 +14,9 @@ public class RegisterController {
 
     @PostMapping("/register")
     public CustomMessage registerUser(@Valid @RequestBody User user) {
+        user.setActive(true);
+        user.setAdmin(false);
+
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return new CustomMessage(0, "This mail is taken");
         }

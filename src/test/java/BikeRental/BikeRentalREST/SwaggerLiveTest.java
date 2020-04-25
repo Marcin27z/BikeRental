@@ -1,20 +1,20 @@
 package BikeRental.BikeRentalREST;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 
-import org.junit.Test;
+import static com.jayway.restassured.RestAssured.given;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class SwaggerLiveTest {
 
-public class SwaggerLiveTest {
-    private static final String URL_PREFIX = "http://localhost:8080";
+    @LocalServerPort
+    int port;
 
     @Test
-    public void whenVerifySpringFoxIsWorking_thenOK() {
-        final Response response = RestAssured.get(URL_PREFIX + "/v2/api-docs");
-        assertEquals(200, response.statusCode());
-        System.out.println(response.asString());
-
+    void whenVerifySpringFoxIsWorkingThenReturnStatusOK() {
+        given().port(port).get("/v2/api-docs")
+                .then().assertThat().statusCode(200);
     }
 }
