@@ -7,13 +7,14 @@ import org.springframework.boot.web.server.LocalServerPort;
 import static com.jayway.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class BikeRentalRestApplicationTests {
+class SwaggerLiveTest {
 
     @LocalServerPort
     int port;
 
-	@Test
-	void contextLoads() {
-		given().port(port).get("/").then().assertThat().extract();
-	}
+    @Test
+    void whenVerifySpringFoxIsWorkingThenReturnStatusOK() {
+        given().port(port).get("/v2/api-docs")
+                .then().assertThat().statusCode(200);
+    }
 }

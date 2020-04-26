@@ -14,15 +14,22 @@ public class RegisterController {
 
     @PostMapping("/register")
     public CustomMessage registerUser(@Valid @RequestBody User user) {
+        user.setActive(true);
+        user.setAdmin(false);
+
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return new CustomMessage(0, "This mail is taken");
-        } else if (userRepository.findByLogin(user.getLogin()).isPresent()) {
-            return new CustomMessage(0, "This login is taken");
-        } else if (userRepository.findByPhoneNumber((user.getPhoneNumber())).isPresent()) {
-            return new CustomMessage(0, "This phone number is taken");
-        } else {
-            userRepository.save(user);
-            return new CustomMessage(1, "User created!");
         }
+
+        if (userRepository.findByLogin(user.getLogin()).isPresent()) {
+            return new CustomMessage(0, "This login is taken");
+        }
+
+        if (userRepository.findByPhoneNumber((user.getPhoneNumber())).isPresent()) {
+            return new CustomMessage(0, "This phone number is taken");
+        }
+
+        userRepository.save(user);
+        return new CustomMessage(1, "User created!");
     }
 }

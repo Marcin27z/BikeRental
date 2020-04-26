@@ -57,9 +57,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .addFilterBefore(adminAuthenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
-                .requestMatchers(PROTECTED_URLS).hasRole("USER")
-                .requestMatchers(PROTECTED_URLS_ADMIN).hasRole("ADMIN").anyRequest()
+                .requestMatchers(PROTECTED_URLS)
                 .authenticated()
+                .requestMatchers(PROTECTED_URLS_ADMIN)
+                .hasRole("ADMIN")
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
@@ -79,6 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     AuthenticationFilter adminAuthenticationFilter() throws Exception {
         final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS_ADMIN);
         filter.setAuthenticationManager(authenticationManager());
+        //filter.setAuthenticationSuccessHandler(successHandler());
         return filter;
     }
 
