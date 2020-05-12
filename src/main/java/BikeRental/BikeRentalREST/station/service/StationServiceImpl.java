@@ -24,10 +24,8 @@ public class StationServiceImpl implements StationService{
 
     @Override
     public boolean addStation(Station station) {
-        if (station == null) {
-            return false;
-        }
         if (!stationRepository.findByAddress(station.getAddress()).isPresent()) {
+            station.setDeleted(false);
             stationRepository.save(station);
             return true;
         }
@@ -36,9 +34,6 @@ public class StationServiceImpl implements StationService{
 
     @Override
     public boolean deleteStation(Long stationId) {
-        if (stationId == null) {
-            return false;
-        }
         return stationRepository.setStationDeleted(stationId) == 1;
     }
 }
