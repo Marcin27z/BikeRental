@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.user;
 
 import BikeRental.BikeRentalREST.rental.Rental;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,6 +33,8 @@ public class User {
 
     private boolean isAdmin;
 
+    private boolean isActive;
+
     public User(){}
 
     public User(String email, String login, String password, String phoneNumber){
@@ -40,6 +43,7 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.isAdmin = false;
+        this.isActive = true;
     }
 
     @JsonIgnore
@@ -70,10 +74,12 @@ public class User {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -92,6 +98,14 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public List<Rental> getRentalList() {
