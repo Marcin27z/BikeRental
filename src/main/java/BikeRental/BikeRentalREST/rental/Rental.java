@@ -2,6 +2,7 @@ package BikeRental.BikeRentalREST.rental;
 
 import BikeRental.BikeRentalREST.bike.Bike;
 import BikeRental.BikeRentalREST.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,11 +22,11 @@ public class Rental {
 
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bike_id")
     private Bike bike;
 

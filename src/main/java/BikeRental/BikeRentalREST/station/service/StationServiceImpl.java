@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StationServiceImpl implements StationService{
@@ -35,5 +36,10 @@ public class StationServiceImpl implements StationService{
     @Override
     public boolean deleteStation(Long stationId) {
         return stationRepository.setStationDeleted(stationId) == 1;
+    }
+
+    @Override
+    public Optional<Station> findById(Long stationId) {
+        return this.stationRepository.findById(stationId);
     }
 }
