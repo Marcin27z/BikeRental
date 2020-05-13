@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class StationController {
@@ -21,6 +23,19 @@ public class StationController {
     @GetMapping("/api/stations/getStations")
     public List<Station> getStations() {
         return stationService.getAllStations();
+    }
+
+    @GetMapping("/api/stations/getStationsWithBikes")
+    public List<Station> getStatitonsWithAvailableBikes(@RequestBody Optional<List<String>> addresses){
+        List<Station> stationList = new ArrayList<Station>();
+        if(addresses.isPresent()){
+            for(int i = 0; i < addresses.get().size(); i++){
+                stationList.addAll(stationService.getStationsWithAvailableBikesOnAddress(addresses.get().get(i)));
+            }
+            return stationList;
+        }else{
+            return stationService.getStationsWithAvailableBikes();
+        }
     }
 
     @PostMapping("/admin/stations/addStation")

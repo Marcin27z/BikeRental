@@ -18,5 +18,13 @@ public interface StationRepository extends CrudRepository<Station, Long> {
     Optional<Station> findByAddress(String address);
 
     List<Station> findAllByDeletedIsFalse();
+
+    @Query(value = "Select s.station_id, s.address, s.deleted from public.bikes b, public.stations s where b.station_id = s.station_id and b.status = 1 and s.deleted = false",
+    nativeQuery = true)
+    List<Station> findAllWithAvailableBikes();
+
+    @Query(value = "Select s.station_id, s.address, s.deleted from public.bikes b, public.stations s where b.station_id = s.station_id and b.status = 1 and s.deleted = false and s.address = :address",
+            nativeQuery = true)
+    List<Station> findAllWithAvailableBikesOnAddress(String address);
 }
 

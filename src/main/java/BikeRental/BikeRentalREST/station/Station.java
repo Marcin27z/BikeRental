@@ -24,6 +24,8 @@ public class Station {
     @JsonIgnore
     private List<Bike> bikeList;
 
+    boolean deleted;
+
     public Long getStationId() {
         return stationId;
     }

@@ -22,11 +22,11 @@ import org.springframework.security.web.util.matcher.*;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/api/**")
+            new AntPathRequestMatcher("/api1/**")
     );
 
     private static final RequestMatcher PROTECTED_URLS_ADMIN = new OrRequestMatcher(
-            new AntPathRequestMatcher("/admin/**")
+            new AntPathRequestMatcher("/admin1/**")
     );
 
     AuthenticationProvider provider;

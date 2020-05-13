@@ -23,6 +23,17 @@ public class StationServiceImpl implements StationService{
     }
 
     @Override
+    public List<Station> getStationsWithAvailableBikes() {
+        return stationRepository.findAllWithAvailableBikes();
+    }
+
+    @Override
+    public List<Station> getStationsWithAvailableBikesOnAddress(String address) {
+        return stationRepository.findAllWithAvailableBikesOnAddress(address);
+    }
+
+
+    @Override
     public boolean addStation(Station station) {
         if (!stationRepository.findByAddress(station.getAddress()).isPresent()) {
             station.setDeleted(false);
