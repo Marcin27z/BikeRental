@@ -14,11 +14,11 @@ public class LoggedUserTestBase extends UserTestBase {
     private User loggedUser;
     private String token;
 
-    void loginAsAdmin() {
+    public void loginAsAdmin() {
         login(true);
     }
 
-    void loginAsUnprivilegedUser() {
+    public void loginAsUnprivilegedUser() {
         login(false);
     }
 
@@ -29,16 +29,16 @@ public class LoggedUserTestBase extends UserTestBase {
         token = loginInfo.getToken();
     }
 
-    void logout() {
+    public void logout() {
         userRepository.delete(loggedUser);
     }
 
-    RequestSpecification givenLogged() {
+    public RequestSpecification givenLogged() {
         return given().port(port)
                 .authentication().oauth2(getToken());
     }
 
-    String getToken() {
+    public String getToken() {
         return token;
     }
 }

@@ -1,6 +1,7 @@
 package BikeRental.BikeRentalREST.station;
 
 import BikeRental.BikeRentalREST.bike.Bike;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +16,8 @@ public class Station {
 
     private String address;
 
-    @OneToMany(mappedBy = "station", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "station")
+    @JsonIgnore
     private List<Bike> bikeList;
 
     public Long getStationId() {
