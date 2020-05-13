@@ -57,4 +57,26 @@ public class RentalController {
         rentalService.addNewRental(rental);
         return new CustomMessage(1, "Rental was made! Bike id = " + rental.getBike().getBikeId().toString());
     }
+
+    @PutMapping("/api/rentals")
+    CustomMessage endRental(@RequestParam final Long userId, @RequestParam final Long stationId){
+        Optional<Rental> rental = this.rentalService.getOpenRentalByUserId(userId);
+        if(!rental.isPresent()){
+            return new CustomMessage(0, "no unfinished rentals!");
+        }
+        Optional<Station> station = this.stationService.findById(stationId);
+        if(!station.isPresent()){
+            return new CustomMessage(0, "station does not exist!");
+        }
+        if(this.bikeService.activateBike(rental.get().getBike().getBikeId()).isPresent()){
+            return new CustomMessage(0, "bike not found!");
+        }
+        this.bikeService.relocateBike(rental.get().getBike().getBikeId(), station.get());
+
+        if(rentalService.endRental(userId)){
+            return new CustomMessage(1, "Return successful!");
+        }else{
+            return new CustomMessage(0, "Return failed!");
+        }
+    }
 }

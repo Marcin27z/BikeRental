@@ -51,15 +51,37 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public Optional<Bike> findById(Long id) {
+    public Optional<Bike> getBikeById(Long id) {
         return bikeRepository.findById(id);
     }
 
     @Override
+    public Optional<Bike> activateBike(Long id) {
+        Optional<Bike> bike = getBikeById(id);
+        bike.ifPresent(b -> {
+            b.setStatus(Status.FREE);
+            bikeRepository.save(b);
+        });
+
+        return bike;
+    }
+
+    @Override
     public Optional<Bike> deactivateBike(Long id) {
-        Optional<Bike> bike = findById(id);
+        Optional<Bike> bike = getBikeById(id);
         bike.ifPresent(b -> {
             b.setStatus(Status.REMOVED);
+            bikeRepository.save(b);
+        });
+
+        return bike;
+    }
+
+    @Override
+    public Optional<Bike> relocateBike(Long bikeId, Station station) {
+        Optional<Bike> bike = getBikeById(bikeId);
+        bike.ifPresent(b -> {
+            b.setStation(station);
             bikeRepository.save(b);
         });
 
