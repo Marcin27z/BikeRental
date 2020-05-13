@@ -56,10 +56,21 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public Optional<Bike> activateBike(Long id) {
+    public Optional<Bike> freeBike(Long id) {
         Optional<Bike> bike = getBikeById(id);
         bike.ifPresent(b -> {
             b.setStatus(Status.FREE);
+            bikeRepository.save(b);
+        });
+
+        return bike;
+    }
+
+    @Override
+    public Optional<Bike> rentBike(Long id) {
+        Optional<Bike> bike = getBikeById(id);
+        bike.ifPresent(b -> {
+            b.setStatus(Status.RENTED);
             bikeRepository.save(b);
         });
 

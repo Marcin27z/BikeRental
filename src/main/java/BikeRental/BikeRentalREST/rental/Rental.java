@@ -22,11 +22,11 @@ public class Rental {
 
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "bike_id")
     private Bike bike;
 
