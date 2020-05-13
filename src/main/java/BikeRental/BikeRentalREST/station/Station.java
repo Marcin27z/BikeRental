@@ -20,9 +20,6 @@ public class Station {
     @NotBlank(message = "Address is required!")
     private String address;
 
-    @JsonIgnore
-    private boolean deleted;
-
     @OneToMany(mappedBy = "station")
     @JsonIgnore
     private List<Bike> bikeList;
