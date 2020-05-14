@@ -25,8 +25,6 @@ public class Station {
     private List<Bike> bikeList;
     boolean deleted;
 
-    boolean deleted;
-
     public Long getStationId() {
         return stationId;
     }
