@@ -23,6 +23,7 @@ public class Station {
     @OneToMany(mappedBy = "station")
     @JsonIgnore
     private List<Bike> bikeList;
+    boolean deleted;
 
     public Long getStationId() {
         return stationId;

@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserByToken(String token) {
+        return userRepository.findByToken(token);
+    }
+
+    @Override
     public Optional<MyUserDetails> findByToken(String token) {
         Optional<User> user = userRepository.findByToken(token);
         return user.map(MyUserDetails::new);
