@@ -7,10 +7,12 @@ import BikeRental.BikeRentalREST.rental.service.RentalService;
 import BikeRental.BikeRentalREST.station.Station;
 import BikeRental.BikeRentalREST.station.service.StationService;
 import BikeRental.BikeRentalREST.user.User;
+import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import BikeRental.BikeRentalREST.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,24 +40,19 @@ public class RentalController {
 
     @GetMapping("/api/rentals")
     List<Rental> getRentalsAsUser(@RequestHeader(name="Authorization") String token){
-        if(!userService.findByToken(token).isPresent()){
-            return new ArrayList<Rental>();
+        Optional<User> user = userService.findUserByToken(token);
+        if(!user.isPresent()){
+            return new ArrayList<>();
         }
-        Long UserId = userService.findByToken(token).get().getUserId();
-        return this.rentalService.getRentalsByUserId(UserId);
+        return this.rentalService.getRentalsByUserId(user.get().getUserId());
     }
 
     @PostMapping("/api/rentals")
     CustomMessage makeRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
-        if(!userService.findByToken(token).isPresent()){
+        Optional<User> user = userService.findUserByToken(token);
+        if(!user.isPresent()){
             return new CustomMessage(0, "User not found!");
         }
-        Long userId = userService.findByToken(token).get().getUserId();
-        Optional<User> user = userService.findById(userId);
-        if(!user.isPresent()){
-            return new CustomMessage(0, "User does not exist!");
-        }
-        Rental rental = new Rental();
         Optional<Station> station = stationService.findById(stationId);
         if(!station.isPresent()){
             return new CustomMessage(0, "Station does not exist!");
@@ -64,6 +61,7 @@ public class RentalController {
         if(bikesList.size() == 0){
             return new CustomMessage(0, "No bikes are available!");
         }
+        Rental rental = new Rental();
         rental.setUser(user.get());
         rental.setBike(bikesList.get(0));
         bikeService.rentBike(bikesList.get(0).getBikeId());
@@ -74,24 +72,24 @@ public class RentalController {
 
     @PutMapping("/api/rentals")
     CustomMessage endRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
-        if(!userService.findByToken(token).isPresent()){
+        Optional<User> user = userService.findUserByToken(token);
+        if(!user.isPresent()){
             return new CustomMessage(0, "User not found!");
         }
-        Long userId = userService.findByToken(token).get().getUserId();
-        Optional<Rental> rental = this.rentalService.getOpenRentalByUserId(userId);
+        Optional<Rental> rental = this.rentalService.getOpenRentalByUserId(user.get().getUserId());
         if(!rental.isPresent()){
-            return new CustomMessage(0, "no unfinished rentals!");
+            return new CustomMessage(0, "No unfinished rentals!");
         }
         Optional<Station> station = this.stationService.findById(stationId);
         if(!station.isPresent()){
-            return new CustomMessage(0, "station does not exist!");
+            return new CustomMessage(0, "Station does not exist!");
         }
         if(this.bikeService.freeBike(rental.get().getBike().getBikeId()).isPresent()){
-            return new CustomMessage(0, "bike not found!");
+            return new CustomMessage(0, "Bike not found!");
         }
         this.bikeService.relocateBike(rental.get().getBike().getBikeId(), station.get());
 
-        if(rentalService.endRental(userId)){
+        if(rentalService.endRental(user.get().getUserId())){
             return new CustomMessage(1, "Return successful!");
         }else{
             return new CustomMessage(0, "Return failed!");
