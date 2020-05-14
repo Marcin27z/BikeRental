@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface UserService {
     LoginInfo login(String username, String password);
+    Optional<User> findUserByToken(String token);
     Optional<MyUserDetails> findByToken(String token);
     Optional<User> findById(Long id);
     List<User> getUsers();
