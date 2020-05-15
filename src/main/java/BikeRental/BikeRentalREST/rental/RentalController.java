@@ -53,6 +53,9 @@ public class RentalController {
         if(!user.isPresent()){
             return new CustomMessage(0, "User not found!");
         }
+        if(this.rentalService.getOpenRentalByUserId(user.get().getUserId()).isPresent()){
+            return new CustomMessage(0, "There is existing rental for this user!");
+        }
         Optional<Station> station = stationService.findById(stationId);
         if(!station.isPresent()){
             return new CustomMessage(0, "Station does not exist!");
