@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Rental {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rentalId;
 
     private LocalDateTime rentalDate;

@@ -13,7 +13,7 @@ import java.util.List;
 public class Bike {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bikeId;
 
     private String name;
