@@ -14,7 +14,7 @@ import java.util.List;
 public class Station {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stationId;
 
     @NotBlank(message = "Address is required!")

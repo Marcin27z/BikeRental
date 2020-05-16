@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUserByToken(String token) {
+        if(token.substring(0,7).trim().toLowerCase().equals("bearer"))
+            token = token.substring(7);
         return userRepository.findByToken(token);
     }
 
