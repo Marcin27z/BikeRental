@@ -2,6 +2,8 @@ package BikeRental.BikeRentalREST.bike;
 
 import BikeRental.BikeRentalREST.rental.Rental;
 import BikeRental.BikeRentalREST.station.Station;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 public class Bike {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bikeId;
 
     private String name;
@@ -19,17 +21,20 @@ public class Bike {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "station_id")
     private Station station;
 
     @OneToMany(mappedBy = "bike", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Rental> rentalList;
 
+    @JsonProperty
     public Long getBikeId() {
         return bikeId;
     }
 
+    @JsonIgnore
     public void setBikeId(Long bikeId) {
         this.bikeId = bikeId;
     }
@@ -64,5 +69,10 @@ public class Bike {
 
     public void setRentalList(List<Rental> rentalList) {
         this.rentalList = rentalList;
+    }
+
+    @JsonIgnore
+    public boolean isActive(){
+        return status != Status.REMOVED;
     }
 }
