@@ -2,6 +2,8 @@ package BikeRental.BikeRentalREST.user;
 
 public class UserDto {
 
+    private Long userId;
+
     private String login;
 
     private String email;
@@ -12,6 +14,7 @@ public class UserDto {
         this.login = user.getLogin();
         this.email = user.getEmail();
         this.phoneNumber = user.getPhoneNumber();
+        this.userId = user.getUserId();
     }
 
     public String getEmail() {
@@ -24,5 +27,9 @@ public class UserDto {
 
     public String getLogin() {
         return login;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }
