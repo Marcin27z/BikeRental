@@ -41,4 +41,10 @@ public class UserController {
             return new CustomMessage(0, "User does not exist.");
         }
     }
+
+    @GetMapping("/api/users/currentUser")
+    public UserDto getCurrentUser(@RequestHeader(name="Authorization") String token) {
+        Optional<User> user = userService.findUserByToken(token);
+        return user.map(UserDto::new).orElse(null);
+    }
 }
