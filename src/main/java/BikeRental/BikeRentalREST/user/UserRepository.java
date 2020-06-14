@@ -14,7 +14,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Optional<User> findByLogin(String login);
     Optional<User> findByPhoneNumber(String phoneNumber);
     @Query(value = "SELECT u FROM User u where u.login = ?1 and u.isActive = true")
-    Optional<User> findActiveByEmail(String login);
+    Optional<User> findActiveByLogin(String login);
     @Query(value = "SELECT u FROM User u where u.token = ?1 and u.isActive = true")
     Optional<User> findByToken(String token);
     List<User> findAll();

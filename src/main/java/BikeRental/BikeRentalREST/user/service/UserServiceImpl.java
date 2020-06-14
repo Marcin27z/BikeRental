@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginInfo login(String username, String password) {
-        Optional<User> user = userRepository.findActiveByEmail(username);
+        Optional<User> user = userRepository.findActiveByLogin(username);
 
         return user
                 .filter((u) -> passwordEncoder.matches(password, u.getPassword()))
