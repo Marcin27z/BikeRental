@@ -4,7 +4,7 @@ import random
 
 filename = "Insert_Station.txt"
 file = open(filename, "w")
-insert_string = "INSERT INTO public.stations(station_id, address, deleted, lat, lon) "
+insert_string = "INSERT INTO public.stations(station_id, address, deleted, lat, lng) "
 
 min_lat = 52.20255705
 min_lon = 20.97135544
