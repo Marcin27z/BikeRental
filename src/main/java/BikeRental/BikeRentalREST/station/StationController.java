@@ -20,11 +20,13 @@ public class StationController {
         this.stationService = stationService;
     }
 
+    @CrossOrigin()
     @GetMapping("/api/stations/getStations")
     public List<Station> getStations() {
         return stationService.getAllStations();
     }
 
+    @CrossOrigin()
     @GetMapping("/api/stations/getStationsWithBikes")
     public List<Station> getStatitonsWithAvailableBikes(@RequestBody Optional<List<String>> addresses){
         List<Station> stationList = new ArrayList<Station>();
@@ -38,6 +40,7 @@ public class StationController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/admin/stations/addStation")
     public CustomMessage addStation(@Valid @RequestBody Station station) {
         if (stationService.addStation(station)) {
@@ -46,6 +49,7 @@ public class StationController {
         return new CustomMessage(0, "Station not added. Probably station already exists.");
     }
 
+    @CrossOrigin()
     @PutMapping("/admin/stations/deleteStation")
     public CustomMessage deleteStation(@RequestParam Long stationId) {
         if (stationService.deleteStation(stationId)) {

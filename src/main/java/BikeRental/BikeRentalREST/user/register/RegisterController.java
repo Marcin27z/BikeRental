@@ -16,6 +16,7 @@ public class RegisterController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @CrossOrigin()
     @PostMapping("/register")
     public CustomMessage registerUser(@Valid @RequestBody User user) {
         user.setActive(true);
