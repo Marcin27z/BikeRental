@@ -42,6 +42,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin()
     @GetMapping("/api/users/currentUser")
     public UserDto getCurrentUser(@RequestHeader(name="Authorization") String token) {
         Optional<User> user = userService.findUserByToken(token);
