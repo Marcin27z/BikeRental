@@ -6,6 +6,7 @@ import BikeRental.BikeRentalREST.user.login.LoginInfo;
 import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +20,26 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public LoginInfo login(String username, String password) {
-        Optional<User> user = userRepository.login(username, password);
+        Optional<User> user = userRepository.findActiveByLogin(username);
 
-        return user.map(u -> {
-            String token = UUID.randomUUID().toString();
-            u.setToken(token);
-            userRepository.save(u);
-            return new LoginInfo(token, u.isAdmin());
-        }).orElse(new LoginInfo(StringUtils.EMPTY, false));
+        return user
+                .filter((u) -> passwordEncoder.matches(password, u.getPassword()))
+                .map(u -> {
+                    String token = UUID.randomUUID().toString();
+                    u.setToken(token);
+                    userRepository.save(u);
+                    return new LoginInfo(token, u.isAdmin());
+                }).orElse(new LoginInfo(StringUtils.EMPTY, false));
     }
 
     @Override
     public Optional<User> findUserByToken(String token) {
-        if(token.substring(0,7).trim().toLowerCase().equals("bearer"))
+        if (token.substring(0, 7).trim().toLowerCase().equals("bearer"))
             token = token.substring(7);
         return userRepository.findByToken(token);
     }

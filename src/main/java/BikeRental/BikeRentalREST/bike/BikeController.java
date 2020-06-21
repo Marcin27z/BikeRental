@@ -15,6 +15,7 @@ public class BikeController {
     @Autowired
     BikeService bikeService;
 
+    @CrossOrigin()
     @GetMapping("/admin/bikes")
     public List<Bike> getBikes(@RequestParam(value = "active") final Optional<Boolean> activeBikes){
         if (activeBikes.isPresent()) {
@@ -24,6 +25,7 @@ public class BikeController {
         }
     }
 
+    @CrossOrigin()
     @GetMapping("/api/bikes")
     public List<Bike> getActiveBikes(@RequestParam(value = "stationId") final Optional<Long> stationId){
         if (stationId.isPresent()) {
@@ -33,6 +35,7 @@ public class BikeController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/admin/bikes/deactivate/{id}")
     public CustomMessage deactivateBike(@PathVariable final Long id){
         Optional<Bike> bike = bikeService.deactivateBike(id);
@@ -43,6 +46,7 @@ public class BikeController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/admin/bikes/add")
     public Bike addBike(@Valid @RequestBody Bike bike){
         return bikeService.addBike(bike);

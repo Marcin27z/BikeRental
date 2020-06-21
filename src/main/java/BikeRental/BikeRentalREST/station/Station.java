@@ -2,11 +2,10 @@ package BikeRental.BikeRentalREST.station;
 
 import BikeRental.BikeRentalREST.bike.Bike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -23,7 +22,12 @@ public class Station {
     @OneToMany(mappedBy = "station")
     @JsonIgnore
     private List<Bike> bikeList;
-    boolean deleted;
+
+    private boolean deleted;
+
+    private BigDecimal lat;
+
+    private BigDecimal lng;
 
     public Long getStationId() {
         return stationId;
@@ -51,5 +55,21 @@ public class Station {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
     }
 }
