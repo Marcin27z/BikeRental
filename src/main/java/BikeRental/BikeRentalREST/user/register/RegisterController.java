@@ -3,6 +3,7 @@ import BikeRental.BikeRentalREST.CustomMessage;
 import BikeRental.BikeRentalREST.user.User;
 import BikeRental.BikeRentalREST.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,6 +12,9 @@ import javax.validation.Valid;
 public class RegisterController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @CrossOrigin()
     @PostMapping("/register")
@@ -30,6 +34,7 @@ public class RegisterController {
             return new CustomMessage(0, "This phone number is taken");
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return new CustomMessage(1, "User created!");
     }
