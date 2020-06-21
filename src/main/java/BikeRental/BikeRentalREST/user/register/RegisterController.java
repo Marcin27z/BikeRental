@@ -12,6 +12,7 @@ public class RegisterController {
     @Autowired
     private UserRepository userRepository;
 
+    @CrossOrigin()
     @PostMapping("/register")
     public CustomMessage registerUser(@Valid @RequestBody User user) {
         user.setActive(true);

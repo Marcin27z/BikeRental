@@ -29,6 +29,7 @@ public class RentalController {
     @Autowired
     BikeService bikeService;
 
+    @CrossOrigin()
     @GetMapping("/admin/rentals")
     List<Rental> getRentalsAsAdmin(@RequestParam final Optional<Long> UserId){
         if(UserId.isPresent()){
@@ -38,6 +39,7 @@ public class RentalController {
         }
     }
 
+    @CrossOrigin()
     @GetMapping("/api/rentals")
     List<Rental> getRentalsAsUser(@RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);
@@ -47,6 +49,7 @@ public class RentalController {
         return this.rentalService.getRentalsByUserId(user.get().getUserId());
     }
 
+    @CrossOrigin()
     @PostMapping("/api/rentals")
     CustomMessage makeRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);
@@ -73,6 +76,7 @@ public class RentalController {
         return new CustomMessage(1, "Rental was made! Bike id = " + rental.getBike().getBikeId().toString());
     }
 
+    @CrossOrigin()
     @PutMapping("/api/rentals")
     CustomMessage endRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);
