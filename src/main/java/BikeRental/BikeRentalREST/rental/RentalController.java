@@ -7,12 +7,10 @@ import BikeRental.BikeRentalREST.rental.service.RentalService;
 import BikeRental.BikeRentalREST.station.Station;
 import BikeRental.BikeRentalREST.station.service.StationService;
 import BikeRental.BikeRentalREST.user.User;
-import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import BikeRental.BikeRentalREST.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
