@@ -7,12 +7,10 @@ import BikeRental.BikeRentalREST.rental.service.RentalService;
 import BikeRental.BikeRentalREST.station.Station;
 import BikeRental.BikeRentalREST.station.service.StationService;
 import BikeRental.BikeRentalREST.user.User;
-import BikeRental.BikeRentalREST.user.security.MyUserDetails;
 import BikeRental.BikeRentalREST.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,7 @@ public class RentalController {
     @Autowired
     BikeService bikeService;
 
+    @CrossOrigin()
     @GetMapping("/admin/rentals")
     List<Rental> getRentalsAsAdmin(@RequestParam final Optional<Long> UserId){
         if(UserId.isPresent()){
@@ -38,6 +37,7 @@ public class RentalController {
         }
     }
 
+    @CrossOrigin()
     @GetMapping("/api/rentals")
     List<Rental> getRentalsAsUser(@RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);
@@ -47,6 +47,7 @@ public class RentalController {
         return this.rentalService.getRentalsByUserId(user.get().getUserId());
     }
 
+    @CrossOrigin()
     @PostMapping("/api/rentals")
     CustomMessage makeRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);
@@ -73,6 +74,7 @@ public class RentalController {
         return new CustomMessage(1, "Rental was made! Bike id = " + rental.getBike().getBikeId().toString());
     }
 
+    @CrossOrigin()
     @PutMapping("/api/rentals")
     CustomMessage endRental(@RequestParam final Long stationId, @RequestHeader(name="Authorization") String token){
         Optional<User> user = userService.findUserByToken(token);

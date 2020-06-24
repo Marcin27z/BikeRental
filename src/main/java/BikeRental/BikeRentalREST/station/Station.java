@@ -2,8 +2,6 @@ package BikeRental.BikeRentalREST.station;
 
 import BikeRental.BikeRentalREST.bike.Bike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +27,7 @@ public class Station {
 
     private BigDecimal lat;
 
-    private BigDecimal lon;
+    private BigDecimal lng;
 
     public Long getStationId() {
         return stationId;
@@ -67,11 +65,11 @@ public class Station {
         this.lat = lat;
     }
 
-    public BigDecimal getLon() {
-        return lon;
+    public BigDecimal getLng() {
+        return lng;
     }
 
-    public void setLon(BigDecimal lon) {
-        this.lon = lon;
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
     }
 }
