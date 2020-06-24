@@ -13,6 +13,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @CrossOrigin()
     @GetMapping("/admin/users")
     public List<User> getUsers(@RequestParam(value = "active") final Optional<Boolean> activeUsers){
         if (activeUsers.isPresent()) {
@@ -22,6 +23,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/admin/users/deactivate/{id}")
     public CustomMessage deactivateUser(@PathVariable final Long id){
         Optional<User> user = userService.deactivateUser(id);
@@ -32,6 +34,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin()
     @PostMapping("/admin/users/permissions/{id}")
     public CustomMessage changePermissions(@PathVariable final Long id, @RequestParam("isAdmin") final boolean isAdmin){
         Optional<User> user = userService.changePermissions(id, isAdmin);
@@ -40,5 +43,12 @@ public class UserController {
         } else {
             return new CustomMessage(0, "User does not exist.");
         }
+    }
+
+    @CrossOrigin()
+    @GetMapping("/api/users/currentUser")
+    public UserDto getCurrentUser(@RequestHeader(name="Authorization") String token) {
+        Optional<User> user = userService.findUserByToken(token);
+        return user.map(UserDto::new).orElse(null);
     }
 }

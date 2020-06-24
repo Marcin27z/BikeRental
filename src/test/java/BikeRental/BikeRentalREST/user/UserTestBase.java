@@ -3,6 +3,7 @@ package BikeRental.BikeRentalREST.user;
 import BikeRental.BikeRentalREST.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Random;
 import java.util.UUID;
@@ -21,6 +22,9 @@ public class UserTestBase {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     protected User createUser(boolean isAdmin, boolean isActive) {
         String email = UNIQUE_TEST_PREFIX + UUID.randomUUID().toString() + EMAIL_POSTFIX;
         String username = UNIQUE_TEST_PREFIX + UUID.randomUUID().toString();
@@ -32,12 +36,13 @@ public class UserTestBase {
 
     protected User createUser(String email, String username, String password, String phoneNumber,
                               boolean isAdmin, boolean isActive, String token) {
-        User user = new User(email, username, password, phoneNumber);
+        User user = new User(email, username, passwordEncoder.encode(password), phoneNumber);
         user.setAdmin(isAdmin);
         user.setActive(isActive);
         user.setToken(token);
         userRepository.save(user);
 
+        user.setPassword(password);
         return user;
     }
 
