@@ -89,7 +89,7 @@ public class RentalController {
         if(!station.isPresent()){
             return new CustomMessage(0, "Station does not exist!");
         }
-        if(this.bikeService.freeBike(rental.get().getBike().getBikeId()).isPresent()){
+        if(!this.bikeService.freeBike(rental.get().getBike().getBikeId()).isPresent()){
             return new CustomMessage(0, "Bike not found!");
         }
         this.bikeService.relocateBike(rental.get().getBike().getBikeId(), station.get());
